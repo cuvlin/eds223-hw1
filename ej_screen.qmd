@@ -7,10 +7,16 @@ library(sf)
 library(here)
 library(tmap)
 library(stars)
+library(viridisLite)
+
 
 # read in geodatabase of EJScreen data at the Census Block Group level
-ejscreen <- st_read(here("eds223-hw1", "data", "ejscreen", "EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb")) 
-
+ejscreen <- st_read(here(
+  "eds223-hw1",
+  "data",
+  "ejscreen",
+  "EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb"
+))
 ```
 
 ---
@@ -23,9 +29,10 @@ ejscreen <- st_read(here("eds223-hw1", "data", "ejscreen", "EJSCREEN_2023_BG_Sta
 
 ### Preliminary Data Loading
 ```{r}
-# filter database to just data in orange county 
-orange_county <- ejscreen |> 
-    filter(CNTY_NAME == "Orange County")
+# filter database to just data in orange county
+orange_county <- ejscreen |>
+  filter(CNTY_NAME == "Orange County") |>
+  filter(ST_ABBREV == "CA")
 ```
 
 Becuase we are looking at only orange county, we will need to filter the dataset to just entries in Orange County, California (this is where I am from). The two maps that will be displayed will show the distribution of Low % Native English Speakers, and the distribution of Hazardous waste proximity. By taking a close look at the distribution of these two, we will hopefully be able to eyeball a relationship.
@@ -37,11 +44,49 @@ In the dataset, the columns names are:
 ### Map 1: Spatial Distribution of Low Percentage English Speakers
 
 ```{r}
-# Create variable containing spatial data for block groups in Orange County
-oc_shape <- st_as_sf(orange_county$Shape, crs = 4236)
-tm_shape(oc_shape) +
-    tm_polygons(fill="lightblue") +
-    tm_crs("auto")
-
+# Map the spatial distribution of low percentage english speakers
+tm_shape(orange_county) +
+  tm_fill(
+    fill = 'LINGISOPCT',
+    fill.legend = tm_legend(title = "Percentage of Limited English Speakers"),
+    fill.scale = tm_scale(values = c('lightblue', 'darkgreen'))
+  ) +
+  tm_borders(
+    col = 'black',
+    lwd = 0.05
+  ) +
+  tm_scalebar(position = c("left", "bottom")) +
+  tm_compass(position = c("left", "top")) +
+  tm_title(
+    "Spatial Distribution of Low Percentage English Speakers",
+    bg = TRUE,
+    frame = TRUE,
+    frame.color = 'black',
+    size = 1.5
+  )
 ```
 
+### Map 3: Spatial Distribution of Hazardous Waste Proximity
+
+```{r}
+# Map the spatial distribution of low percentage english speakers
+tm_shape(orange_county) +
+  tm_fill(
+    fill = 'D2_PTSDF',
+    fill.legend = tm_legend(title = "Hazardous Waste Proximity EJ Index"),
+    fill.scale = tm_scale(values = c('lightgreen', 'darkred'))
+  ) +
+  tm_borders(
+    col = 'black',
+    lwd = 0.05
+  ) +
+  tm_scalebar(position = c("left", "bottom")) +
+  tm_compass(position = c("left", "top")) +
+  tm_title(
+    "Spatial Distribution of Hazardous Waste Proximity",
+    bg = TRUE,
+    frame = TRUE,
+    frame.color = 'black',
+    size = 1.5
+  )
+```
