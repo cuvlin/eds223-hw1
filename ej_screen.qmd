@@ -16,7 +16,7 @@ ejscreen <- st_read(here("eds223-hw1", "data", "ejscreen", "EJSCREEN_2023_BG_Sta
 ---
 
 *Region:* Orange County, California
-*Community:* Low % of Native English Speakers (Spanish)
+*Community:* Low % of Native English Speakers
 *EJ Issue:* Hazardous Waste Proximity
 
 ---
@@ -30,9 +30,18 @@ orange_county <- ejscreen |>
 
 Becuase we are looking at only orange county, we will need to filter the dataset to just entries in Orange County, California (this is where I am from). The two maps that will be displayed will show the distribution of Low % Native English Speakers, and the distribution of Hazardous waste proximity. By taking a close look at the distribution of these two, we will hopefully be able to eyeball a relationship.
 
+In the dataset, the columns names are:
+- `orange_county$LINGISOPCT` to look at the percentage of limited Englisht-speaking households
+- `orange_county$D2_PTSDF` to look at the index that quanitfies the hazardous waste proximity of a community (Environmental Justice Index)
+
 ### Map 1: Spatial Distribution of Low Percentage English Speakers
 
 ```{r}
+# Create variable containing spatial data for block groups in Orange County
+oc_shape <- st_as_sf(orange_county$Shape, crs = 4236)
+tm_shape(oc_shape) +
+    tm_polygons(fill="lightblue") +
+    tm_crs("auto")
 
 ```
 
