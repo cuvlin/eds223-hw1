@@ -2,6 +2,7 @@
 ### Loading in Packages and Data
 
 ```{r}
+#| output: false
 library(tidyverse)
 library(sf)
 library(here)
@@ -12,7 +13,7 @@ library(viridisLite)
 
 # read in geodatabase of EJScreen data at the Census Block Group level
 ejscreen <- st_read(here(
-  "eds223-hw1",
+  "eds223-hw1"
   "data",
   "ejscreen",
   "EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb"
@@ -21,14 +22,15 @@ ejscreen <- st_read(here(
 
 ---
 
-*Region:* Orange County, California
-*Community:* Low % of Native English Speakers
+*Region:* Orange County, California\
+*Community:* Low % of Native English Speakers\
 *EJ Issue:* Hazardous Waste Proximity
 
 ---
 
 ### Preliminary Data Loading
 ```{r}
+#| output: false
 # filter database to just data in orange county
 orange_county <- ejscreen |>
   filter(CNTY_NAME == "Orange County") |>
@@ -48,7 +50,9 @@ In the dataset, the columns names are:
 tm_shape(orange_county) +
   tm_fill(
     fill = 'LINGISOPCT',
-    fill.legend = tm_legend(title = "Percentage of Limited English Speakers"),
+    fill.legend = tm_legend(
+      title = "Plot 1: Fraction of Limited English Speakers"
+    ),
     fill.scale = tm_scale(values = c('lightblue', 'darkgreen'))
   ) +
   tm_borders(
@@ -73,7 +77,9 @@ tm_shape(orange_county) +
 tm_shape(orange_county) +
   tm_fill(
     fill = 'D2_PTSDF',
-    fill.legend = tm_legend(title = "Hazardous Waste Proximity EJ Index"),
+    fill.legend = tm_legend(
+      title = "Plot 2: Hazardous Waste Proximity EJ Index"
+    ),
     fill.scale = tm_scale(values = c('lightgreen', 'darkred'))
   ) +
   tm_borders(
@@ -90,3 +96,11 @@ tm_shape(orange_county) +
     size = 1.5
   )
 ```
+
+### What is going on in these maps?
+
+Orange County, California, is home to some of the most beautiful beaches in the world. It also happens to be the place I call home-- along with several diverse communitites. I grew up right next to several predominantly hispanic communities-- more specifically a city called San Juan Capistrano. In plot 1, San Juan can be seen as the small green blotches in the southern region. In this city rests Doheny beach, a beautiful beach break that has a rivermouth feeding into it. More times than not, you can see thousands of different types of hazards dumped into this rivermouth. People seem to simply disrespect this minority community far too often. This brought me to the question: 
+
+##### Are spanish speaking communities more exposed to hazardous waste? \ 
+    
+If we take a look at the map, we can clearly see a relationship between these two variables. In both plots, there are concentration of higher values in the Northwest region. More specifically, the block in Plot 1 with the highest fraction of non english speakers is also extremely high in the Hazardous Waste Proximity Environmental Justice Index. It is clear that there may be a spatial association between these two variables. However, to come to this conclusion further analysis needs to occurr such as a bivariate local Morans I test for spatial autocorrelation.
