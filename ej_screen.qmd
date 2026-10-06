@@ -1,0 +1,38 @@
+
+### Loading in Packages and Data
+
+```{r}
+library(tidyverse)
+library(sf)
+library(here)
+library(tmap)
+library(stars)
+
+# read in geodatabase of EJScreen data at the Census Block Group level
+ejscreen <- st_read(here("eds223-hw1", "data", "ejscreen", "EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb")) 
+
+```
+
+---
+
+*Region:* Orange County, California
+*Community:* Low % of Native English Speakers (Spanish)
+*EJ Issue:* Hazardous Waste Proximity
+
+---
+
+### Preliminary Data Loading
+```{r}
+# filter database to just data in orange county 
+orange_county <- ejscreen |> 
+    filter(CNTY_NAME == "Orange County")
+```
+
+Becuase we are looking at only orange county, we will need to filter the dataset to just entries in Orange County, California (this is where I am from). The two maps that will be displayed will show the distribution of Low % Native English Speakers, and the distribution of Hazardous waste proximity. By taking a close look at the distribution of these two, we will hopefully be able to eyeball a relationship.
+
+### Map 1: Spatial Distribution of Low Percentage English Speakers
+
+```{r}
+
+```
+
