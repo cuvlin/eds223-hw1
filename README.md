@@ -34,7 +34,7 @@ The data is **not stored in this repository** because `data/` is listed in `.git
 1. Clone the repository.
 2. Add the data as described above.
 3. Install the required R packages: `tidyverse`, `sf`, `here`, `tmap` (v4), `stars`, `viridisLite`.
-4. Open and render `ej_screen.qmd` in RStudio.
+4. Open and render `ej_screen.qmd` in the IDE of your choice (I use Positron).
 
 ## Author
 
