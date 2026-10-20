@@ -13,7 +13,6 @@ library(viridisLite)
 
 # read in geodatabase of EJScreen data at the Census Block Group level
 ejscreen <- st_read(here(
-  "eds223-hw1"
   "data",
   "ejscreen",
   "EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb"
