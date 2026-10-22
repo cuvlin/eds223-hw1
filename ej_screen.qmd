@@ -1,3 +1,5 @@
+Author: Calvin Fu\
+Github: [@cuvlin](github.com/cuvlin)
 
 ### Loading in Packages and Data
 
